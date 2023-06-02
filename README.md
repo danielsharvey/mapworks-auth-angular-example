@@ -10,7 +10,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 This example may be run in CodeSandbox:
 
-- TBA
+- https://codesandbox.io/p/github/mapworksio/mapworks-auth-angular-example
 
 ## Using the Mapworks code
 
