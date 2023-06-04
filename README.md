@@ -61,6 +61,7 @@ Note that due to constraints of the CodeSandbox environment, the OAuth2/OIDC cal
 Please also see the following related examples:
 
 1. https://github.com/mapworksio/mapworks-auth-before-loading-map-example
+2. https://github.com/mapworksio/mapworks-mouseover-zoomto-angular-example
 
 
 ## Development server
