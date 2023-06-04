@@ -16,7 +16,7 @@ This example may be run in CodeSandbox:
 ## Mapworks Community
 
 If you have any questions, please feel free to join the discussion on this
-[Mapworks Community discussion topic](https://community.mapworks.io/).
+[Mapworks Community discussion topic](https://community.mapworks.io/t/mapworks-auth-example-angular/33).
 
 
 ## Application configuration
@@ -60,7 +60,7 @@ Note that due to constraints of the CodeSandbox environment, the OAuth2/OIDC cal
 
 Please also see the following related examples:
 
-1. [Mapworks Auth Example - User Sign In before loading map - Developers - Mapworks Community](https://community.mapworks.io/t/mapworks-auth-example-user-sign-in-before-loading-map/30)
+1. https://github.com/mapworksio/mapworks-auth-before-loading-map-example
 
 
 ## Development server
