@@ -2,7 +2,7 @@
 
 This example illustrates utilising Mapworks Auth with an Angular web application.
 
-The specfic use case includes accessing auth via Mapworks, and requiring sign-in prior to the use of a Mapworks map component (via protected Angular routes).
+The specific use case includes accessing auth via Mapworks, and requiring sign-in prior to the use of a Mapworks map component (via protected Angular routes).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
