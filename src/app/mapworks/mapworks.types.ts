@@ -79,6 +79,9 @@ export declare class MapworksTreeEntity extends MapworksBaseTreeNodeEntity {
  */
 export declare class MapworksTreeLayerEntity extends MapworksTreeEntity {
 
+  /// The feature set ID of the layer associated with this Layer Selector tree node
+  public getFeatureSetId(): string;
+
   /// Triggers an identify event (typically triggering highlighting within the layer selector)
   public identify(): MapworksTreeLayerEntity;
 
@@ -88,6 +91,9 @@ export declare class MapworksTreeLayerEntity extends MapworksTreeEntity {
  * A TreeLayerEntity that contains vector features. Vector layers may be of type ADHOC, FILTERED or VECTOR.
  */
 export declare class MapworksTreeVectorLayerEntity extends MapworksTreeLayerEntity {
+
+  ///
+  public constructor(options: any, mapOptions: { map: MapworksMap });
 
 }
 
@@ -724,6 +730,16 @@ export declare class MapworksStudio {
     ///
     signinCallback(): void;
   };
+
+  core: {
+
+    entity: {
+
+      TreeVectorLayerEntity: typeof MapworksTreeVectorLayerEntity;
+
+    }
+
+  }
 
   /// Provide access to Studio's copy of the [Underscore](https://underscorejs.org) library
   _: typeof _;
