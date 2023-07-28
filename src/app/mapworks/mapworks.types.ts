@@ -82,6 +82,24 @@ export declare class MapworksTreeLayerEntity extends MapworksTreeEntity {
   /// The feature set ID of the layer associated with this Layer Selector tree node
   public getFeatureSetId(): string;
 
+  /**
+   * The search format string used as a template for matching search queries
+   * with feature attribute data.
+   *
+   * The format string should contain feature attribute references enclosed in
+   * pipes e.g. `|name|`
+   */
+  public getSearchFormat(): string;
+
+  /**
+   * The search result format string used to format result features
+   * for display in the search results list.
+
+   * The format string should contain feature attribute references enclosed in
+   * pipes e.g. `|name|`
+   */
+  public getSearchResultFormat(): string;
+
   /// Triggers an identify event (typically triggering highlighting within the layer selector)
   public identify(): MapworksTreeLayerEntity;
 
