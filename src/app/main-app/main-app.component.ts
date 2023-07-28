@@ -35,7 +35,7 @@ export class MainAppComponent implements OnInit {
 
   constructor(
     @Inject(APP_CONFIG) public appConfig: AppConfig,
-    private mapService: MapworksMapService,
+    public mapService: MapworksMapService,
     private injector: Injector
   ) {
     this.user$ = mapService.mapService.user$;

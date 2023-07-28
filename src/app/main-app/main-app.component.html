@@ -27,7 +27,16 @@
       </div>
 
       <!-- mouseover and mouse click display component -->
-      <div style="width: 66%;">
+      <div style="width: 66%;" *ngIf="{
+        map: mapService.mapService.map$ | async,
+        layer: (mapService.mapService.selectLayer(appConfig.layerRef) | async),
+        secondLayer: mapService.mapService.selectLayer(appConfig.secondLayerRef) | async,
+        thirdLayer: mapService.mapService.selectLayer(appConfig.thirdLayerRef) | async,
+      } as data">
+        <app-map-search-autocomplete
+          [mxMap]="data.map!"
+          [layers]="[data.layer!, data.secondLayer!, data.thirdLayer!]"
+          ></app-map-search-autocomplete>
         <app-map-events-display></app-map-events-display>
       </div>
 
@@ -35,6 +44,6 @@
   </div>
 
   <!-- the map -->
-  <div #map class="xmap" id="xmapworks-map" style="flex-grow: 1; margin-top: 8px; margin-bottom: 0px;"></div>
+  <div #map style="flex-grow: 1; margin-top: 8px; margin-bottom: 0px;"></div>
 
 </div>

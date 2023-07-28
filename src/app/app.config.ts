@@ -10,6 +10,8 @@ export const appConfig = {
   client_id: '3mvor82v8k8f6nbi4f8bpihsom',
   mapRef: 'map-osm-public',
   layerRef: 'ne_10m_populated_places',
+  secondLayerRef: 'places',
+  thirdLayerRef: 'world_boundaries_m_ll_wgs84',
 };
 
 export type AppConfig = typeof appConfig;
