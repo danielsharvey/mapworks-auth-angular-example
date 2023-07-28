@@ -1,10 +1,11 @@
 import {
+  ErrorResponse,
   SigninPopupArgs,
   SignoutRedirectArgs,
   User,
   UserManager,
 } from 'oidc-client-ts';
-import { BehaviorSubject, Observable, ReplaySubject, from, fromEvent, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, distinctUntilChanged, filter, from, fromEvent, map, of, switchMap, withLatestFrom } from 'rxjs';
 import {
   MapworksMap,
   MapworksStudio,
@@ -328,12 +329,25 @@ export class MapworksMapService {
         }
       };
       this.userManager!.events.addUserLoaded(this.userLoadedCb);
-      const user = await this.userManager!.init();
-      this.userSubj.next(user);
+      let user: MapworksUser | null = null;
+      try {
+        user = await this.userManager!.init();
+      } catch(err: any) {
+        const s: string = err.toString();
+        if(s.indexOf('invalid_grant') >= 0) {
+          await this.userManager.removeUser();
+          // let error propogate if it fails a second time
+          user = await this.userManager!.init();
+        } else {
+          console.error(`ERROR: ${err}`);
+          console.error(err);
+        }
+      }
+      this.userSubj.next(user); // XXX TODO Can we just rely on callback above?
       this.accessTokenSubj.next(user?.access_token);
       return user;
     }
 
-    return await this.userManager!.init();
+    return await this.userManager!.init(); // XXX TODO Are we relying in this case on the callback above?
   }
 }
