@@ -770,9 +770,14 @@ export declare class MapworksStudio {
  * Once Studio is loaded, the global reference `Studio` of type
  * MapworksStudio is defined.
  */
+// export declare const Studio: MapworksStudio;
+// declare global {
+//   interface Window {
+//     // map: any;
+//     Studio: MapworksStudio;
+//   }
+// }
+
 declare global {
-  interface Window {
-    // map: any;
-    Studio: MapworksStudio;
-  }
+  var Studio: MapworksStudio;
 }
