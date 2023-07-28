@@ -14,7 +14,7 @@ import {
   MapworksUserManagerSettings,
 } from './mapworks.types';
 
-declare let Studio: MapworksStudio;
+// export declare let Studio: MapworksStudio;
 
 const DEFAULT_MAPWORKS_API_ORIGIN = 'https://api.mapworks.io';
 
