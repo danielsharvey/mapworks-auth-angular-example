@@ -9,6 +9,7 @@ import {
   MapworksMap,
   MapworksStudio,
   MapworksStudioConfigOptions,
+  MapworksTreeEntity,
   MapworksUser,
   MapworksUserManager,
   MapworksUserManagerSettings,
@@ -97,6 +98,40 @@ export class MapworksMapService {
    */
   getMap(name = DEFAULT_MAP_NAME): MapworksMap {
     return this.maps[name];
+  }
+
+  // XXX TODO Use "snapshot" terminology
+
+  /**
+   * Select an Observable of the specified named map.
+   *
+   * @param mapLookup the internal lookup name of the map to select
+   * @returns an Observable for the selected map
+   */
+  selectMap(mapLookup = DEFAULT_MAP_NAME): Observable<MapworksMap> {
+    return this.maps$.pipe(
+      map(maps => maps[mapLookup]),
+      filter(map_ => map_ !== undefined),
+      distinctUntilChanged(),
+      switchMap(map_ => {
+        return map_.isReady()
+          ? of(map_)
+          : fromEvent(map_, 'ready').pipe(map((_) => map_));
+      }),
+    );
+  }
+
+  /**
+   * Select an Observable of the specified layer.
+   *
+   * @param layerRef the layer reference
+   * @param mapLookup the internal lookup name of the map to select
+   * @returns an Observable for the selected layer
+   */
+  selectLayer(layerRef: string, mapLookup = DEFAULT_MAP_NAME): Observable<MapworksTreeEntity> {
+    return this.selectMap(mapLookup).pipe(
+      map((_map) => _map?.getTree()?.findByReferenceId(layerRef))
+    );
   }
 
   private userLoadedCb?: () => void;
@@ -286,6 +321,7 @@ export class MapworksMapService {
       this.userLoadedCb = async () => {
         // console.log('USERMANAGER userLoaded');
         if (this.userManager) {
+          // we use init() to get user as it returns different shapeo to getUser() (XXX TODO review)
           const user = await this.userManager.init();
           this.userSubj.next(user);
           this.accessTokenSubj.next(user?.access_token);
