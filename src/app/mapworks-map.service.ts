@@ -46,7 +46,13 @@ export class MapworksMapService {
   }
 
   public async isSignedIn(): Promise<boolean> {
+    try {
     return !!(await this.mapService.getUser());
+    } catch(err) {
+      console.error(`isSignedIn(): ERROR: ${err}`);
+      console.error(err);
+      return false;
+    }
   }
 
   /**
