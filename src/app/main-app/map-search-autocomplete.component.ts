@@ -48,10 +48,23 @@ interface CollatedSearchResult {
 }
 
 interface CollatedSearchResultRow {
+  type: 'knownArea';
   map: MapworksMap;
   layer: MapworksTreeLayerEntity;
   row: searchFeatures_Output['data'][0]['data'][0];
 }
+
+interface IncidentFilterSearchTerm {
+  type: 'incidentFilter';
+  value: string;
+}
+
+interface CommentFilterSearchTerm {
+  type: 'commentFilter';
+  value: string;
+}
+
+type AutocompleteRow = CollatedSearchResultRow | IncidentFilterSearchTerm | CommentFilterSearchTerm;
 
 /**
  *
@@ -163,11 +176,16 @@ export class MapSearchAutocompleteComponent {
   }
 
   async handleOptionSelected(event: MatAutocompleteSelectedEvent) {
-    const row = event.option.value;
-    const r = event.option.value as CollatedSearchResultRow;
-    const [f] = await ((<any>r.layer).downloadFeatures([r.row.id]));
-    f.select();
-    await f.zoom();
+    const r = event.option.value as AutocompleteRow;
+    if(r.type === 'knownArea') {
+      const [f] = await ((<any>r.layer).downloadFeatures([r.row.id]));
+      f.select();
+      await f.zoom();
+    } else if(r.type === 'incidentFilter') {
+      console.log('handleOption', 'incidentFilter', r.value);
+    } else if(r.type === 'commentFilter') {
+      console.log('handleOption', 'commentFilter', r.value);
+    }
   }
 
   formatSearchResult(layer: MapworksTreeLayerEntity, row: any): string {
@@ -179,12 +197,17 @@ export class MapSearchAutocompleteComponent {
     return formatted;
   }
 
-  displayFn = ({ layer, row }: { layer: MapworksTreeLayerEntity, row: any }) => {
-    if(layer && row) {
-      return `${this.formatSearchResult(layer, row)} (${layer.getTitle()})`;
-    } else {
-      return '';
+  displayFn = (r: AutocompleteRow) => {
+    if(r.type === 'knownArea') {
+      if(r.layer && r.row) {
+        return `${this.formatSearchResult(r.layer, r.row)} (${r.layer.getTitle()})`;
+      }
+    } else if(r.type === 'incidentFilter') {
+      return `Incidents containing "${r.value}"`;
+    } else if(r.type === 'commentFilter') {
+      return `Comments containing "${r.value}"`;
     }
+    return '';
   }
 
   private getSearchPostData(search: string, featureSetId: string, searchFormat: string) {

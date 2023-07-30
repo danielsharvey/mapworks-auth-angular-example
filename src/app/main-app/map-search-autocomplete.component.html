@@ -8,11 +8,21 @@
            [formControl]="searchControl"
            (input)="handleChange($event)"
            [matAutocomplete]="autoGroup">
-      <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayFn" (optionSelected)="handleOptionSelected($event)">
+      <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayFn" (optionSelected)="handleOptionSelected($event)" autoActiveFirstOption>
+        <ng-container *ngIf="(searchControl.value?.length ?? 0) > 2">
+            <mat-option [value]="{ type:'incidentFilter', value:searchControl.value}">
+              <span style="font-weight: bold;">Incidents containing "{{ searchControl.value }}"</span>
+            </mat-option>
+        </ng-container>
+        <ng-container *ngIf="(searchControl.value?.length ?? 0) > 2">
+            <mat-option [value]="{ type:'commentFilter', value:searchControl.value}">
+              <span style="font-weight: bold;">Comments containing "{{ searchControl.value }}"</span>
+            </mat-option>
+        </ng-container>
         <ng-container *ngIf="searchResult$ | async as searchResult">
           <mat-optgroup *ngFor="let layerResult of searchResult.queryResult?.data; let i = index">
             <span style="font-weight: bold;">{{ searchResult.layers[i].getTitle() }} ({{ layerResult.data.length }})</span>
-            <mat-option *ngFor="let row of layerResult.data" [value]="{ map:searchResult.map, layer:searchResult.layers[i], row }">
+            <mat-option *ngFor="let row of layerResult.data" [value]="{ type:'knownArea', map:searchResult.map, layer:searchResult.layers[i], row }">
               {{ formatSearchResult(searchResult.layers[i], row) }}
             </mat-option>
           </mat-optgroup>
