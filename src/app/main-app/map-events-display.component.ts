@@ -113,7 +113,6 @@ export class MapEventsDisplayComponent {
       this.mapPointMarker = new MapPointMarker(
         this.mapService.mapService.Studio!,
         map,
-        layer
       );
     }
 

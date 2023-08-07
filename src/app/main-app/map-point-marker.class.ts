@@ -50,7 +50,6 @@ export class MapPointMarker {
   constructor(
     private Studio: MapworksStudio,
     private map: MapworksMap,
-    private layer: MapworksTreeLayerEntity,
     private featureReporterName = 'app-zoom-to-with-marker',
   ) {
     this.template = Studio._.template(MARKER_SVG);
