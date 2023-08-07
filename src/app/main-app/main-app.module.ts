@@ -13,7 +13,18 @@ import {
 import { MapSearchAutocompleteComponent } from './map-search-autocomplete.component';
 import { BrowserModule } from '@angular/platform-browser';
 
-export const routes: Route[] = [{ path: '', component: MainAppComponent }];
+export const routes: Route[] = [
+  {
+    path: '',
+    component: MainAppComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../routing-test/routing-test.module').then((m) => m.RoutingTestModule),
+      },
+    ],
+  },
+];
 
 @NgModule({
   declarations: [
